@@ -22,6 +22,7 @@ export class FancyTreeComponent implements OnInit, AfterViewInit, OnDestroy {
   @Output() public treeEventEmitter: EventEmitter<any> = new EventEmitter();
   public config: any;
   public showTree: boolean;
+  public showLibraryButton =  false;
   public rootNode: any;
   public rootMenuTemplate = `<span class="ui dropdown sb-dotted-dropdown" autoclose="itemClick" suidropdown="" tabindex="0">
   <span id="contextMenu" class="p-0 w-auto"><i class="icon ellipsis vertical sb-color-black"></i></span>
@@ -115,6 +116,7 @@ export class FancyTreeComponent implements OnInit, AfterViewInit, OnDestroy {
       if (rootNode) {
         this.treeService.setActiveNode(rootNode);
       }
+    this.addFromLibraryButton(0);
     });
     this.showTree = true;
   }
@@ -197,6 +199,7 @@ export class FancyTreeComponent implements OnInit, AfterViewInit, OnDestroy {
       click: (event, data): boolean => {
         this.tree.nativeElement.click();
         const node = data.node;
+        this.addFromLibraryButton(node.getLevel() - 1);
         // this.treeEventEmitter.emit({ 'type': 'nodeSelect', 'data': node });
         this.telemetryService.interact({ edata: this.getTelemetryInteractEdata()});
         return true;
@@ -435,6 +438,14 @@ export class FancyTreeComponent implements OnInit, AfterViewInit, OnDestroy {
       case 'addresource':
         break;
     }
+  }
+  addFromLibraryButton(nodeLevel) {
+   if (nodeLevel === 0) {
+    _.isEmpty(_.get(this.config, 'children')) ? this.showLibraryButton = false : this.showLibraryButton = true;
+   } else {
+    const hierarchylevelData =  this.config.hierarchy[`level${nodeLevel}`];
+    _.isEmpty(_.get(hierarchylevelData, 'children')) ? this.showLibraryButton = false : this.showLibraryButton = true;
+   }
   }
   addFromLibrary() {
     this.editorService.emitshowLibraryPageEvent('showLibraryPage');
