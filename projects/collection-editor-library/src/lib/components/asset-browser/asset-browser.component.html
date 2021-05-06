@@ -56,7 +56,19 @@
         <p class="fs-0-986 ml-auto" style="color: #666;">{{assetsCount}}</p>
         </div>
          <!-- *ngIf="!myAssets.length" -->
-        <div class="mt-20" *ngIf="!myAssets.length"> No images found, please try searching for something else </div>
+        <div class="sb-loader sb-success-loader sb-loader-top" *ngIf="showEmptyResult"></div>
+        <div class="mt-20 fs-0-92" *ngIf="!myAssets.length && showEmptyResult"> No images found, please try searching for something else </div>
+        <div class="field mt-15">
+          <label>sortby</label>
+          <div class="field w-20">
+            <sui-select
+               #select>
+              <sui-select-option  value="sortby">Ascending</sui-select-option>
+              <sui-select-option  value="Descending">Descending</sui-select-option>
+              <sui-select-option  value="A-Z">A-Z</sui-select-option>
+            </sui-select>
+          </div>
+        </div>
         <div class="sb-grid-layout image">
           <div class="sb-video-content" *ngFor="let data of myAssets">
             <div class="sb-image-section relative position">
@@ -81,7 +93,7 @@
         </div>
         <p class="fs-0-986 ml-auto" style="color: #666;">{{assetsCount}}</p>
         </div>
-        <div class="mt-20" *ngIf="!allImages.length"> No images found, please try searching for something else </div>
+        <div class="mt-20 fs-0-92" *ngIf="!allImages.length && showEmptyResult"> No images found, please try searching for something else </div>
 
          <div class="sb-grid-layout image">
           <div class="sb-video-content" *ngFor="let data of allImages">

@@ -39,6 +39,7 @@ export class AssetBrowserComponent implements OnInit, OnDestroy {
   public assetsCount: any;
   public searchMyInput: any;
   public searchAllInput: any;
+  public showEmptyResult: any;
   showAddButton: boolean;
   appIcon;
 
@@ -65,7 +66,7 @@ export class AssetBrowserComponent implements OnInit, OnDestroy {
 
   getMyImages(offset) {
     this.assetsCount = 0;
-
+    this.showEmptyResult = false;
     if (offset === 0) {
       this.myAssets.length = 0;
     }
@@ -84,6 +85,7 @@ export class AssetBrowserComponent implements OnInit, OnDestroy {
       return throwError(this.editorService.apiErrorHandling(err, errInfo));
     })).subscribe((res) => {
         this.assetsCount = res.result.count;
+        this.showEmptyResult = true;
         _.map(res.result.content, (item) => {
           if (item.downloadUrl) {
             this.myAssets.push(item);
@@ -100,7 +102,7 @@ export class AssetBrowserComponent implements OnInit, OnDestroy {
 
   getAllImages(offset) {
     this.assetsCount = 0;
-
+    this.showEmptyResult = false;
     if (offset === 0) {
       this.allImages.length = 0;
     }
@@ -119,6 +121,7 @@ export class AssetBrowserComponent implements OnInit, OnDestroy {
     }))
       .subscribe((res) => {
         this.assetsCount = res.result.count;
+        this.showEmptyResult = true;
         _.map(res.result.content, (item) => {
           if (item.downloadUrl) {
             this.allImages.push(item);
