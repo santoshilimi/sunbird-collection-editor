@@ -76,12 +76,12 @@ describe('AssetBrowserComponent', () => {
   it('#lazyloadMyImages() should get my images ', () => {
     spyOn(component, 'getMyImages');
     component.lazyloadMyImages();
-    expect(component.getMyImages).toHaveBeenCalledWith(0, undefined, true);
+    expect(component.getMyImages).toHaveBeenCalledWith(0);
   });
   it('#lazyloadMyImages() should get all images', () => {
     spyOn(component, 'getAllImages');
     component.lazyloadAllImages();
-    expect(component.getAllImages).toHaveBeenCalledWith(0, undefined, true);
+    expect(component.getAllImages).toHaveBeenCalledWith(0);
   });
   it('#dismissImagePicker() should emit modalDismissEmitter  ', () => {
     component.showImagePicker = true;
@@ -103,13 +103,13 @@ describe('AssetBrowserComponent', () => {
     component.searchImages('clearInput', 'myImages');
     expect(component.query).toEqual('');
     expect(component.searchMyInput).toEqual('');
-    expect(component.getMyImages).toHaveBeenCalledWith(0, '', true );
+    expect(component.getMyImages).toHaveBeenCalledWith(0);
   });
   it('#searchImages() should call allImages for all images ', () => {
     spyOn(component, 'getAllImages');
     component.searchImages('clearInput', 'allImages');
     expect(component.query).toEqual('');
     expect(component.searchAllInput).toEqual('');
-    expect(component.getAllImages).toHaveBeenCalledWith(0, '', true );
+    expect(component.getAllImages).toHaveBeenCalledWith(0);
   });
 });

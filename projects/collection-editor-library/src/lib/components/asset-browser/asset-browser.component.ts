@@ -63,11 +63,9 @@ export class AssetBrowserComponent implements OnInit, OnDestroy {
     console.log(JSON.stringify(event));
   }
 
-  getMyImages(offset, query?, search?) {
+  getMyImages(offset) {
     this.assetsCount = 0;
-    if (!search) {
-      this.searchMyInput = '';
-    }
+
     if (offset === 0) {
       this.myAssets.length = 0;
     }
@@ -78,8 +76,8 @@ export class AssetBrowserComponent implements OnInit, OnDestroy {
       },
       offset
     };
-    if (query) {
-      req['query'] = query;
+    if (this.searchMyInput) {
+      req['query'] = this.searchMyInput;
     }
     this.questionService.getAssetMedia(req).pipe(catchError(err => {
       const errInfo = { errorMsg: 'Image search failed' };
@@ -100,11 +98,9 @@ export class AssetBrowserComponent implements OnInit, OnDestroy {
     this.assetBrowserEmitter.emit({type: 'image', url: this.appIcon});
   }
 
-  getAllImages(offset, query?, search?) {
+  getAllImages(offset) {
     this.assetsCount = 0;
-    if (!search) {
-      this.searchAllInput = '';
-    }
+
     if (offset === 0) {
       this.allImages.length = 0;
     }
@@ -114,8 +110,8 @@ export class AssetBrowserComponent implements OnInit, OnDestroy {
       },
       offset
     };
-    if (query) {
-      req['query'] = query;
+    if (this.searchAllInput) {
+      req['query'] = this.searchAllInput;
     }
     this.questionService.getAssetMedia(req).pipe(catchError(err => {
       const errInfo = { errorMsg: 'Image search failed' };
@@ -133,7 +129,7 @@ export class AssetBrowserComponent implements OnInit, OnDestroy {
 
   lazyloadMyImages() {
     const offset = this.myAssets.length;
-    this.getMyImages(offset, this.query, true);
+    this.getMyImages(offset);
   }
 
   /**
@@ -141,7 +137,7 @@ export class AssetBrowserComponent implements OnInit, OnDestroy {
    */
   lazyloadAllImages() {
     const offset = this.allImages.length;
-    this.getAllImages(offset, this.query, true);
+    this.getAllImages(offset);
   }
 
   uploadImage(event) {
@@ -237,9 +233,9 @@ export class AssetBrowserComponent implements OnInit, OnDestroy {
       this.query = event.target.value;
     }
     if (type === 'myImages' ) {
-        this.getMyImages(0, this.query, true);
+        this.getMyImages(0);
     } else {
-        this.getAllImages(0, this.query, true);
+        this.getAllImages(0);
     }
   }
   ngOnDestroy() {

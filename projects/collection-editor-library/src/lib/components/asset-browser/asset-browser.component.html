@@ -4,14 +4,14 @@
   <div class="sb-modal-content p-0">
     <sui-tabset>
       <div class="sb-tabset-menu">
-        <a class="sb-item" suiTabHeader="1">Upload</a>
-        <a class="sb-item" (activate)="getMyImages(0)" suiTabHeader="2">My Images</a>
-        <a class="sb-item" (activate)="getAllImages(0)" suiTabHeader="3">All Image</a>
+        <a class="sb-item" (activate)="getMyImages(0)" suiTabHeader="1">My Images</a>
+        <a class="sb-item" (activate)="getAllImages(0)" suiTabHeader="2">All Image</a>
+        <a class="sb-item" suiTabHeader="3">Upload</a>
       </div>
 
 
 
-      <div class="ui segment sb-tabset-segment m-0 pt-15" suiTabContent="1">
+      <div class="ui segment sb-tabset-segment m-0 pt-15" suiTabContent="3">
         <div class="content">
           <div class="upload-image-modal-section d-flex flex-ai-center flex-jc-center flex-dc">
             <ng-container *ngIf="imageUploadLoader">
@@ -41,8 +41,8 @@
         </div>
       </div>
 
-      <div class="ui segment sb-tabset-segment m-0 pt-15" infiniteScroll [infiniteScrollDistance]="2"
-        [infiniteScrollThrottle]="500" [scrollWindow]="false" (scrolled)="lazyloadMyImages()" suiTabContent="2">
+      <div class="ui segment sb-tabset-segment m-0 pt-15" infiniteScroll [infiniteScrollDistance]="1"
+        [infiniteScrollThrottle]="500" [scrollWindow]="false" (scrolled)="lazyloadMyImages()" suiTabContent="1">
       
         <div class="ui  pb-16 d-flex pl-0">
         <div class="sb-search-box small no-btn">
@@ -55,7 +55,8 @@
         </div>
         <p class="fs-0-986 ml-auto" style="color: #666;">{{assetsCount}}</p>
         </div>
-
+         <!-- *ngIf="!myAssets.length" -->
+        <div class="mt-20" *ngIf="!myAssets.length"> No images found, please try searching for something else </div>
         <div class="sb-grid-layout image">
           <div class="sb-video-content" *ngFor="let data of myAssets">
             <div class="sb-image-section relative position">
@@ -67,7 +68,7 @@
       </div>
 
       <div class="ui segment sb-tabset-segment m-0 pt-15" infiniteScroll [infiniteScrollDistance]="2"
-        [infiniteScrollThrottle]="500" [scrollWindow]="false" (scrolled)="lazyloadAllImages()" suiTabContent="3">
+        [infiniteScrollThrottle]="500" [scrollWindow]="false" (scrolled)="lazyloadAllImages()" suiTabContent="2">
        
         <div class="ui  pb-16 d-flex pl-0">
         <div class="sb-search-box small no-btn">
@@ -80,6 +81,7 @@
         </div>
         <p class="fs-0-986 ml-auto" style="color: #666;">{{assetsCount}}</p>
         </div>
+        <div class="mt-20" *ngIf="!allImages.length"> No images found, please try searching for something else </div>
 
          <div class="sb-grid-layout image">
           <div class="sb-video-content" *ngFor="let data of allImages">
