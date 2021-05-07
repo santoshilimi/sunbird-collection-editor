@@ -64,7 +64,7 @@ export class AssetBrowserComponent implements OnInit, OnDestroy {
     console.log(JSON.stringify(event));
   }
 
-  getMyImages(offset) {
+  getMyImages(offset, scroll?) {
     this.assetsCount = 0;
     this.showEmptyResult = false;
     if (offset === 0) {
@@ -75,6 +75,8 @@ export class AssetBrowserComponent implements OnInit, OnDestroy {
         mediaType: ['image'],
         createdBy: _.get(this.editorService.editorConfig, 'context.user.id')
       },
+      limit: scroll ? 50 : 200,
+      sort_by: { createdOn: 'desc' },
       offset
     };
     if (this.searchMyInput) {
@@ -100,7 +102,7 @@ export class AssetBrowserComponent implements OnInit, OnDestroy {
     this.assetBrowserEmitter.emit({type: 'image', url: this.appIcon});
   }
 
-  getAllImages(offset) {
+  getAllImages(offset, scroll?) {
     this.assetsCount = 0;
     this.showEmptyResult = false;
     if (offset === 0) {
@@ -110,6 +112,8 @@ export class AssetBrowserComponent implements OnInit, OnDestroy {
       filters: {
         mediaType: ['image']
       },
+      limit: scroll ? 50 : 200,
+      sort_by: { createdOn: 'desc' },
       offset
     };
     if (this.searchAllInput) {
@@ -132,7 +136,7 @@ export class AssetBrowserComponent implements OnInit, OnDestroy {
 
   lazyloadMyImages() {
     const offset = this.myAssets.length;
-    this.getMyImages(offset);
+    this.getMyImages(offset, 'scroll');
   }
 
   /**
@@ -140,7 +144,7 @@ export class AssetBrowserComponent implements OnInit, OnDestroy {
    */
   lazyloadAllImages() {
     const offset = this.allImages.length;
-    this.getAllImages(offset);
+    this.getAllImages(offset, 'scroll');
   }
 
   uploadImage(event) {

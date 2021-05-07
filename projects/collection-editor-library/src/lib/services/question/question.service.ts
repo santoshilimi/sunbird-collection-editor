@@ -82,7 +82,6 @@ export class QuestionService {
             },
             status: ['Live'],
           },
-          limit: 50,
         }
       }
     };
